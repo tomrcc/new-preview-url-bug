@@ -4,7 +4,7 @@ import { getCollection, getEntry } from "astro:content";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => {
-    return import.meta.env.PROD ? data.published !== false : true;
+    return data.published === true;
   });
   return posts.map((post) => ({ params: { slug: post.slug } }));
 }
