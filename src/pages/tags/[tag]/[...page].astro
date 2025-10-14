@@ -7,7 +7,9 @@ import { getCollection, getEntry } from "astro:content";
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
   const tags: Record<string, any> = {};
   const page = await getEntry("pages", "blog");
-  const posts = await getCollection("blog");
+  const posts = await getCollection("blog", ({ data }: { data: any }) => {
+    return data.published === true;
+  });
 
   if (!page) {
     return;
@@ -25,7 +27,7 @@ export async function getStaticPaths({ paginate }: { paginate: Function }) {
   // );
 
   return Object.keys(tags).flatMap((tag) => {
-    const filteredPosts = posts.filter(({ data }) =>
+    const filteredPosts = posts.filter(({ data }: { data: any }) =>
       data.post_hero.tags.includes(tag)
     );
     return paginate(filteredPosts, {

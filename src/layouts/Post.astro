@@ -21,9 +21,11 @@ type Props = {
 
 const { frontmatter, body } = Astro.props;
 
-const posts = await getCollection("blog");
+const posts = await getCollection("blog", ({ data }: { data: any }) => {
+  return data.published === true;
+});
 const filteredPosts = posts.filter(
-  (post) => post.data.title !== frontmatter.title
+  (post: any) => post.data.title !== frontmatter.title
 );
 ---
 
@@ -41,7 +43,7 @@ const filteredPosts = posts.filter(
     <h2 class="blog-recent-posts-heading">Recent Posts</h2>
     <ul class="blog-recent-posts-list">
       {
-        filteredPosts.slice(0, 3).map((post, i) => {
+        filteredPosts.slice(0, 3).map((post: any, i: number) => {
           return (
             <li>
               <PostSummary {...post} loading="lazy" />
