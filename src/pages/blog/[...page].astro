@@ -12,7 +12,7 @@ type Props = {
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
   const posts = await getCollection("blog", ({ data }) => {
-    return import.meta.env.PROD ? data.draft !== true : true;
+    return import.meta.env.PROD ? data.published !== false : true;
   });
   const page = await getEntry("pages", "blog");
   posts.sort((a, b) => {
