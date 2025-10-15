@@ -74,7 +74,7 @@ collections_config:
       - name: Add New Post
         schema: default
         icon: post_add
-        editor: content
+        editor: visual
     schemas:
       default:
         path: '.cloudcannon/schemas/post.mdx'
